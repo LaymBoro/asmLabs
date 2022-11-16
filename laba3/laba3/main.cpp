@@ -13,7 +13,7 @@ uint16_t random()
 	mt19937 rng(rd());
 	uniform_int_distribution<uint16_t> uni(MIN, MAX);
 
-	return uni(rng);
+	return 2;
 }
 
 int main()
@@ -24,8 +24,6 @@ int main()
 		arr[i] = 0;
 	}
 
-	
-
 
 	__asm
 	{
@@ -34,13 +32,13 @@ int main()
 		lea esi, arr // 1) 0 - 127
 
 		mov edi, esi // 2) 128 - 255
-		add edi, 128
+		add edi, 256
 
 		mov edx, edi // 3) 256 - 383
-		add edx, 128
+		add edx, 256
 
 		mov ecx, edx // 4) 384 - 511
-		add ecx, 128
+		add ecx, 256
 
 	calling:
 
@@ -56,48 +54,83 @@ int main()
 		jmp is_even
 		
 	is_even:
-
+		
+		push edx
+		push eax
+		xor edx, edx
+		mov ebx, 2
+		div ebx
+		cmp edx, 0
+		pop eax
+		pop edx
+		jne not_add_even
+	
 		mov[esi], eax
 		add esi, 2
 
+	not_add_even:
+		
 		lea ebx, arr
-		add ebx, 127
-		cmp ebx, esi
-		jge calling
-		jng is_odd
-
+		add ebx, 254
+		cmp esi, ebx
+		jge exit
+		jmp calling
+/*
 	is_odd:
+
+		push edx
+		push eax
+		mov ebx, 0x0000'0002
+		div ebx
+		cmp edx, 0
+		pop eax
+		pop edx
+		je not_add_odd
 
 		mov[edi], eax
 		add edi, 2
 
+	not_add_odd:
+
 		lea ebx, arr
-		add ebx, 255
+		add ebx, 510
 		cmp ebx, edi
-		jge calling
 		jng is_bigger
+		jge exit
 
 	is_bigger:
+
+		
+		cmp eax, 50000
+		jnge not_add_bigger
 
 		mov[edx], eax
 		add edx, 2
 
+	not_add_bigger:
+
 		lea ebx, arr
-		add ebx, 383
+		add ebx, 766
 		cmp ebx, edx
-		jge calling
 		jng is_smaller
+		jge exit
 
 	is_smaller:
 
+		cmp eax, 10000
+		jnle not_add_smaller
+
 		mov[ecx], eax
 		add ecx, 2
+	
+	not_add_smaller:
 
 		lea ebx, arr
-		add ebx, 511
+		add ebx, 1022
 		cmp ebx, ecx
-		jge calling
-		jng exit
+		jng calling
+		jge exit
+*/
 	exit:
 		popad
 	}

@@ -1,4 +1,4 @@
 ﻿  main.cpp
-C:\Users\LaymB\Desktop\учеба\5 сем\машинка\laba3\laba3\main.cpp(100): warning C4414: exit: короткий переход к функции преобразован в ближний переход
-C:\Users\LaymB\Desktop\учеба\5 сем\машинка\laba3\laba3\main.cpp(101,1): warning C4102: exit: неиспользованная метка
+C:\Users\LaymB\Desktop\учеба\5 сем\машинка\laba3\laba3\main.cpp(76): warning C4414: exit: короткий переход к функции преобразован в ближний переход
+C:\Users\LaymB\Desktop\учеба\5 сем\машинка\laba3\laba3\main.cpp(134,1): warning C4102: exit: неиспользованная метка
   laba3.vcxproj -> C:\Users\LaymB\Desktop\учеба\5 сем\машинка\laba3\Debug\laba3.exe
