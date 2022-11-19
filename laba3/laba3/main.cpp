@@ -13,7 +13,7 @@ uint16_t random()
 	mt19937 rng(rd());
 	uniform_int_distribution<uint16_t> uni(MIN, MAX);
 
-	return 2;
+	return uni(rng);
 }
 
 int main()
@@ -50,93 +50,89 @@ int main()
 
 		pop edx
 		pop ecx
-
-		jmp is_even
 		
 	is_even:
 		
 		push edx
-		push eax
-		xor edx, edx
+		mov edx, 0
 		mov ebx, 2
+		push eax
 		div ebx
 		cmp edx, 0
 		pop eax
 		pop edx
-		jne not_add_even
+		jne add_odd
 	
 		mov[esi], eax
 		add esi, 2
-
-	not_add_even:
 		
 		lea ebx, arr
 		add ebx, 254
 		cmp esi, ebx
-		jge exit
-		jmp calling
-/*
-	is_odd:
+		jge go_to_exit
+		jmp is_bigger
 
-		push edx
-		push eax
-		mov ebx, 0x0000'0002
-		div ebx
-		cmp edx, 0
-		pop eax
-		pop edx
-		je not_add_odd
+
+	add_odd:
 
 		mov[edi], eax
 		add edi, 2
 
-	not_add_odd:
-
 		lea ebx, arr
 		add ebx, 510
-		cmp ebx, edi
-		jng is_bigger
-		jge exit
+		cmp edi, ebx
+		jge go_to_exit
 
 	is_bigger:
 
-		
 		cmp eax, 50000
-		jnge not_add_bigger
+		jnge is_smaller
 
 		mov[edx], eax
 		add edx, 2
 
-	not_add_bigger:
-
 		lea ebx, arr
 		add ebx, 766
-		cmp ebx, edx
-		jng is_smaller
-		jge exit
+		cmp edx, ebx
+		jge go_to_exit
+		jmp calling
 
 	is_smaller:
 
 		cmp eax, 10000
-		jnle not_add_smaller
+		jnle calling
 
 		mov[ecx], eax
 		add ecx, 2
-	
-	not_add_smaller:
 
 		lea ebx, arr
 		add ebx, 1022
-		cmp ebx, ecx
-		jng calling
-		jge exit
-*/
-	exit:
+		cmp ecx, ebx
+		jge go_to_exit
+		jmp calling
+
+	go_to_exit:
 		popad
 	}
 
+
 	for (size_t i = 0; i < DATA_SIZE; i++)
 	{
+		switch (i)
+		{
+		case 0:
+			cout << "even: " << "\n";
+			break;
+		case 128:
+			cout << "\n" << "odd: " << "\n";
+			break;
+		case 256:
+			cout << "\n" << "> 50000: " << "\n";
+			break;
+		case 384:
+			cout << "\n" << "< 10000: " << "\n";
+			break;
+		}
 		cout << arr[i] << " ";
 	}
 	return 0;
