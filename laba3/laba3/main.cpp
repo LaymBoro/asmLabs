@@ -51,8 +51,6 @@ int main()
 		pop edx
 		pop ecx
 		
-	is_even:
-		
 		push edx
 		mov edx, 0
 		mov ebx, 2
@@ -67,7 +65,7 @@ int main()
 		add esi, 2
 		
 		lea ebx, arr
-		add ebx, 254
+		add ebx, 256
 		cmp esi, ebx
 		jge go_to_exit
 		jmp is_bigger
@@ -79,7 +77,7 @@ int main()
 		add edi, 2
 
 		lea ebx, arr
-		add ebx, 510
+		add ebx, 512
 		cmp edi, ebx
 		jge go_to_exit
 
@@ -92,7 +90,7 @@ int main()
 		add edx, 2
 
 		lea ebx, arr
-		add ebx, 766
+		add ebx, 768
 		cmp edx, ebx
 		jge go_to_exit
 		jmp calling
@@ -106,7 +104,7 @@ int main()
 		add ecx, 2
 
 		lea ebx, arr
-		add ebx, 1022
+		add ebx, 1024
 		cmp ecx, ebx
 		jge go_to_exit
 		jmp calling
