@@ -1,6 +1,27 @@
 ﻿#include <iostream>
+#include <string>
+#include <cmath>
 
+std::string to_binary(int num)
+{
+	std::string binary;
+	binary.clear();
+	int bit = 0;
+	int* arr = new int[8];
 
+	for (size_t i = 0; i < 8; i++)
+	{
+		bit = num % 2;
+		arr[i] = bit;
+		num = num / 2;
+	}
+	for (int i = 7; i >= 0; i--)
+	{
+		binary.append(std::to_string(arr[i]));
+	}
+
+	return binary;
+}
 
 int main()
 {
@@ -10,6 +31,7 @@ int main()
 	size_t zeroPair = 0; //6
 	size_t onePair = 0; //4
 	uint8_t revers = 0; //30  0001'1110
+	uint8_t straight = 0; //  0111'1000
 	
 	__asm 
 	{
@@ -67,7 +89,6 @@ int main()
 		lea esi, num
 		mov eax, [esi]
 		mov ecx, 32
-		jmp second_count
 
 	second_count:
 
@@ -139,6 +160,8 @@ int main()
 
 		lea esi, num
 		mov eax, [esi]
+		lea edi, straight
+		mov [edi], al
 
 		mov edx, 0
 		mov ebx, 0
@@ -159,7 +182,7 @@ int main()
 		popad
 	}
 
-	std::cout << "revers: \n" <<(int) revers<< " \n";
+	std::cout <<"straiht: " << to_binary((int) straight) << "\nrevers: " << to_binary((int) revers) << " \n";
 	return 0;
 }
 
