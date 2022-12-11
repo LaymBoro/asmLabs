@@ -36,7 +36,6 @@ size_t main()
     size_t term = 0;
     size_t anotherCounter = 0;
     size_t result = 0;
-    size_t tmp = 0;
     size_t Bytes = 4;
     bool overflow = false;
 
@@ -95,6 +94,7 @@ size_t main()
         mul Y //Y * Σ(C_i)
         jo except
         add result, eax
+        mov term, 0
 
     //Σ(A_i * B_i_j)
 
@@ -109,29 +109,29 @@ size_t main()
         mov eax, [esi]
         mul[edi]
         jo except
-        add tmp, eax
+        add term, eax
 
-        mov eax, anotherCounter
+        mov eax, arrSize
         mul Bytes
-        jo except
         add edi, eax
-        inc anotherCounter
         loop mul_loop
 
-        mov anotherCounter, 0
+        inc anotherCounter
+        mov eax, anotherCounter
+        mul Bytes
         lea edi, B
-        add edi, 4
+        add edi, eax
         add esi, 4
         mov ecx, arrSize
         add ecx, 1
         inc ebx
         cmp ebx, arrSize
-        jnge after_loop
+        jge after_loop
         loop mul_loop
 
     after_loop:
 
-        mov eax, tmp //X * Σ(A_i * B_i_j)
+        mov eax, term //X * Σ(A_i * B_i_j)
         mul X
         jo except
         add result, eax
