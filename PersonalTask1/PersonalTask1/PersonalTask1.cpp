@@ -37,7 +37,7 @@ size_t main()
     size_t anotherCounter = 0;
     size_t result = 0;
     size_t tmp = 0;
-    size_t size_tByte = 4;
+    size_t Bytes = 4;
     bool overflow = false;
 
 
@@ -100,28 +100,34 @@ size_t main()
         lea edi, B
 
         mov ecx, arrSize
-        mov ebx, edi
-        
+        mov ebx, 0
 
     mul_loop:
 
         mov eax, [esi]
-        mul [edi]
+        mul[edi]
         jo except
         add tmp, eax
 
         mov eax, anotherCounter
-        mul size_tByte
+        mul Bytes
         jo except
         add edi, eax
+        inc anotherCounter
         loop mul_loop
 
-        mov edi, ebx
+        mov anotherCounter, 0
+        lea edi, B
         add edi, 4
         add esi, 4
         mov ecx, arrSize
         add ecx, 1
+        inc ebx
+        cmp ebx, arrSize
+        jnge after_loop
         loop mul_loop
+
+    after_loop:
 
         mov eax, tmp //X * Σ(A_i * B_i_j)
         mul X
