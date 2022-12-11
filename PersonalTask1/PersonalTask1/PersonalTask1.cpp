@@ -49,6 +49,8 @@ size_t main()
     randomArray(C);
     randomMatrix(B);
 
+    std::cout << "X: " << X << " Y: " << Y << "\n";
+
     std::cout << "A: \n";
     for (size_t i = 0; i < arrSize; i++)
     {
@@ -103,7 +105,7 @@ size_t main()
         mov ebx, 0
 
     mul_loop:
-
+    
         mov eax, [esi]
         mul[edi]
         jo except
@@ -134,10 +136,14 @@ size_t main()
         jo except
         add result, eax
 
+        jmp no_trouble
+
     except:
 
         add overflow, 1
 
+    no_trouble:
+            
 		popad
 	}
 
