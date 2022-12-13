@@ -17,7 +17,7 @@ CMAIN:
     mov ebp, esp; for correct debugging
     call clearGeneralPurposeRegisters
     lea edi, [string]
-    lea ebx, [string]
+    mov ebx, edi
     mov ecx, 32
     GET_STRING string, ecx
     NEWLINE
